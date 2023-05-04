@@ -1,0 +1,13 @@
+[gd_scene load_steps=3 format=3 uid="uid://csmh5g3ddmmt7"]
+
+[ext_resource type="Script" path="res://LineProperties.gd" id="1_3te7u"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_cpps3"]
+size = Vector2(16, 16)
+
+[node name="Checkpoint" type="Area2D"]
+monitorable = false
+script = ExtResource("1_3te7u")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_cpps3")

@@ -1,0 +1,104 @@
+[gd_scene load_steps=10 format=3 uid="uid://cbeuxq2vj5ltq"]
+
+[ext_resource type="Theme" uid="uid://fe2lcps2a6v8" path="res://DefaultTheme.tres" id="1_q0ybp"]
+[ext_resource type="Script" path="res://LevelDescription.gd" id="2_8qsnu"]
+[ext_resource type="Script" path="res://StartGame.gd" id="3_mpxa4"]
+[ext_resource type="Environment" uid="uid://d4erefukqrvie" path="res://glow_enviroment.tres" id="4_gucgp"]
+[ext_resource type="Texture2D" uid="uid://csjbv80aoatg0" path="res://logo.png" id="4_rrfak"]
+[ext_resource type="Script" path="res://HighscoreTable.gd" id="5_5h6st"]
+[ext_resource type="Script" path="res://AddCancelToAcceptDialog.gd" id="6_yvf53"]
+
+[sub_resource type="InputEventAction" id="InputEventAction_81qfv"]
+action = &"ui_select"
+
+[sub_resource type="Shortcut" id="Shortcut_6537k"]
+events = [SubResource("InputEventAction_81qfv")]
+
+[node name="Node2D" type="Node2D"]
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+theme = ExtResource("1_q0ybp")
+
+[node name="ColorRect" type="ColorRect" parent="Control"]
+layout_mode = 0
+offset_right = 800.0
+offset_bottom = 600.0
+color = Color(0, 0, 0, 1)
+
+[node name="LevelDescription" type="RichTextLabel" parent="Control"]
+layout_mode = 0
+offset_left = 50.0
+offset_top = 132.0
+offset_right = 268.0
+offset_bottom = 550.0
+text = "Please select a level in the dropdown above.
+
+Select \"Controls\" to see the controls"
+script = ExtResource("2_8qsnu")
+
+[node name="LevelSelector" type="OptionButton" parent="Control"]
+layout_mode = 0
+offset_left = 50.0
+offset_top = 50.0
+offset_right = 250.0
+offset_bottom = 82.0
+shortcut = SubResource("Shortcut_6537k")
+item_count = 4
+selected = 0
+popup/item_0/text = "Select a level here"
+popup/item_0/id = 0
+popup/item_0/disabled = true
+popup/item_0/separator = true
+popup/item_1/text = "Rocky Roundabout"
+popup/item_1/id = 1
+popup/item_2/text = "Curved Corridors"
+popup/item_2/id = 2
+popup/item_3/text = "Controls"
+popup/item_3/id = 3
+
+[node name="StartGame" type="Button" parent="Control"]
+layout_mode = 0
+offset_left = 365.0
+offset_top = 510.0
+offset_right = 435.0
+offset_bottom = 550.0
+text = "Start"
+script = ExtResource("3_mpxa4")
+
+[node name="Logo" type="TextureRect" parent="Control"]
+layout_mode = 0
+offset_left = 364.0
+offset_top = 140.0
+offset_right = 436.0
+offset_bottom = 371.0
+texture = ExtResource("4_rrfak")
+
+[node name="HighscoreTable" type="RichTextLabel" parent="Control"]
+layout_mode = 0
+offset_left = 532.0
+offset_top = 50.0
+offset_right = 750.0
+offset_bottom = 550.0
+text = "Highscores for each level will show up here..."
+script = ExtResource("5_5h6st")
+
+[node name="AcceptDialog" type="AcceptDialog" parent="Control/HighscoreTable"]
+position = Vector2i(150, 150)
+size = Vector2i(500, 152)
+ok_button_text = "Yes"
+dialog_text = "The file for highscores was not found. Do you wish to make a new one? (If you say no, a placeholder will be used instead and scores will not be saved)"
+dialog_close_on_escape = false
+dialog_autowrap = true
+script = ExtResource("6_yvf53")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = ExtResource("4_gucgp")
+
+[connection signal="item_selected" from="Control/LevelSelector" to="Control/LevelDescription" method="_on_level_selector_item_selected"]
+[connection signal="item_selected" from="Control/LevelSelector" to="Control/HighscoreTable" method="_on_level_selector_item_selected"]
+[connection signal="pressed" from="Control/StartGame" to="Control/StartGame" method="_on_pressed"]
+[connection signal="confirmed" from="Control/HighscoreTable/AcceptDialog" to="Control/HighscoreTable" method="_on_accept_dialog_confirmed"]

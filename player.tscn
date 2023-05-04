@@ -1,0 +1,61 @@
+[gd_scene load_steps=8 format=3 uid="uid://cooq7cn7sk0by"]
+
+[ext_resource type="Script" path="res://Player.gd" id="1_2hcw7"]
+[ext_resource type="Texture2D" uid="uid://dl7j64elcauh0" path="res://SmileyRace.png" id="2_8q3ya"]
+[ext_resource type="Theme" uid="uid://fe2lcps2a6v8" path="res://DefaultTheme.tres" id="3_wfyic"]
+[ext_resource type="Script" path="res://Stopwatch.gd" id="4_nmkyl"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_eab30"]
+radius = 8.0
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_duyua"]
+atlas = ExtResource("2_8q3ya")
+region = Rect2(0, 96, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_658st"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_duyua")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[node name="Player" type="CharacterBody2D"]
+position = Vector2(744, 904)
+motion_mode = 1
+script = ExtResource("1_2hcw7")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_eab30")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_658st")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+zoom = Vector2(2, 2)
+position_smoothing_enabled = true
+position_smoothing_speed = 100.0
+
+[node name="Stopwatch" type="Label" parent="."]
+offset_left = -199.0
+offset_top = -150.0
+offset_right = 200.0
+offset_bottom = -100.0
+theme = ExtResource("3_wfyic")
+text = "0.000"
+horizontal_alignment = 1
+vertical_alignment = 1
+script = ExtResource("4_nmkyl")
+
+[node name="LapCounter" type="Label" parent="."]
+offset_left = -200.0
+offset_top = 100.0
+offset_right = 199.0
+offset_bottom = 150.0
+theme = ExtResource("3_wfyic")
+text = "Lap: 1"
+horizontal_alignment = 1
+vertical_alignment = 1
